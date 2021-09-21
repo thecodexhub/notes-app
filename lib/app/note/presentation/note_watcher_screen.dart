@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/note_error_screen.dart';
 import '../../../config/injection.dart';
 import '../bloc/note_actor/note_actor_bloc.dart';
 import '../bloc/note_watcher/note_watcher_bloc.dart';
@@ -27,7 +28,7 @@ class NoteWatcherScreen extends StatelessWidget {
             initial: (e) => Container(),
             loadInProgress: (e) => const CircularProgressIndicator(),
             loadSuccess: (e) => NoteOverviewScreen(notes: e.notes),
-            loadFailure: (e) => Text(e.failure.toString()),
+            loadFailure: (e) => ErrorCard(failure: e.failure),
           );
         },
       ),

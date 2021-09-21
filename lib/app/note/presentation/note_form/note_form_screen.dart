@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../common/note_error_screen.dart';
 import '../../../../config/injection.dart';
 import '../../../../routes/app_router.gr.dart';
 import '../../bloc/note_form/note_form_bloc.dart';
@@ -37,11 +38,7 @@ class NoteFormScreen extends StatelessWidget {
           state.saveFailureOrSuccessOption.fold(
             () => null,
             (either) => either.fold(
-              // todo: Handle error UI
-              (failure) => print(failure.map(
-                unexpected: (_) => "Unexpected",
-                unableToFindBox: (_) => "Unable to find Box",
-              )),
+              (failure) => ErrorCard(failure: failure),
               (_) => AutoRouter.of(context).popUntil(
                   (route) => route.settings.name == MyHomePageRoute.name),
             ),
