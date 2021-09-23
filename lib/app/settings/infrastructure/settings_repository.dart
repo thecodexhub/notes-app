@@ -6,6 +6,7 @@ import '../../../common/enum_from_string.dart';
 import '../domain/app_font.dart';
 import '../domain/app_theme.dart';
 import '../domain/i_settings_repository.dart';
+import '../domain/note_tile_style.dart';
 
 @LazySingleton(as: ISettingsRepository)
 class SettingsRepository implements ISettingsRepository {
@@ -13,6 +14,8 @@ class SettingsRepository implements ISettingsRepository {
   static const String FONT_KEY = 'app-font';
   // ignore: constant_identifier_names
   static const String THEME_KEY = 'app-theme';
+  // ignore: constant_identifier_names
+  static const String TILE_STYLE_KEY = 'note-tile-style';
 
   @override
   Future<Option<AppFont>> getFontFromLocalCache() async {
@@ -31,6 +34,14 @@ class SettingsRepository implements ISettingsRepository {
   }
 
   @override
+  Future<Option<NoteTileStyle>> getTileStyleFromLocalCache() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final String? tileStyle = sharedPreferences.getString(TILE_STYLE_KEY);
+    final noteTileStyle = enumFromString(NoteTileStyle.values, tileStyle);
+    return optionOf(noteTileStyle);
+  }
+
+  @override
   Future<Option<AppFont>> updateFontInCache(AppFont font) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString(FONT_KEY, font.fontToString());
@@ -44,5 +55,15 @@ class SettingsRepository implements ISettingsRepository {
     await sharedPreferences.setString(THEME_KEY, theme.themeToString());
 
     return optionOf(theme);
+  }
+
+  @override
+  Future<Option<NoteTileStyle>> updateTileStyleInCache(
+      NoteTileStyle tileStyle) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString(
+        TILE_STYLE_KEY, tileStyle.noteTileStyleToString());
+
+    return optionOf(tileStyle);
   }
 }

@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import '../domain/app_font.dart';
 import '../domain/app_theme.dart';
 import '../domain/i_settings_repository.dart';
+import '../domain/note_tile_style.dart';
 import '../domain/settings.dart';
 
 part 'settings_bloc.freezed.dart';
@@ -28,6 +29,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
             await _settingsRepository.getFontFromLocalCache();
         final failureOrAppTheme =
             await _settingsRepository.getThemeFromLocalCache();
+        final failureOrNoteTileStyle =
+            await _settingsRepository.getTileStyleFromLocalCache();
 
         var newState = failureOrAppFont.fold(
           () => state,
@@ -39,6 +42,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           () => newState,
           (appTheme) => newState.copyWith(
               settings: newState.settings.copyWith(theme: appTheme)),
+        );
+
+        newState = failureOrNoteTileStyle.fold(
+          () => newState,
+          (tileStyle) => newState.copyWith(
+              settings: newState.settings.copyWith(tileStyle: tileStyle)),
         );
 
         yield newState;
@@ -62,6 +71,16 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           () => state,
           (appFont) =>
               state.copyWith(settings: state.settings.copyWith(font: appFont)),
+        );
+      },
+      tileStyleChanged: (e) async* {
+        yield state.copyWith(isSaving: true);
+        final newTileStyle = await _settingsRepository.updateTileStyleInCache(e.tileStyle);
+        yield state.copyWith(isSaving: false);
+        yield newTileStyle.fold(
+          () => state,
+          (tileStyle) =>
+              state.copyWith(settings: state.settings.copyWith(tileStyle: tileStyle)),
         );
       },
     );

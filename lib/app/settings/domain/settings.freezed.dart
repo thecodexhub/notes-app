@@ -16,10 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$SettingsTearOff {
   const _$SettingsTearOff();
 
-  _Settings call({required AppTheme theme, required AppFont font}) {
+  _Settings call(
+      {required AppTheme theme,
+      required AppFont font,
+      required NoteTileStyle tileStyle}) {
     return _Settings(
       theme: theme,
       font: font,
+      tileStyle: tileStyle,
     );
   }
 }
@@ -31,6 +35,7 @@ const $Settings = _$SettingsTearOff();
 mixin _$Settings {
   AppTheme get theme => throw _privateConstructorUsedError;
   AppFont get font => throw _privateConstructorUsedError;
+  NoteTileStyle get tileStyle => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SettingsCopyWith<Settings> get copyWith =>
@@ -41,7 +46,7 @@ mixin _$Settings {
 abstract class $SettingsCopyWith<$Res> {
   factory $SettingsCopyWith(Settings value, $Res Function(Settings) then) =
       _$SettingsCopyWithImpl<$Res>;
-  $Res call({AppTheme theme, AppFont font});
+  $Res call({AppTheme theme, AppFont font, NoteTileStyle tileStyle});
 }
 
 /// @nodoc
@@ -56,6 +61,7 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
   $Res call({
     Object? theme = freezed,
     Object? font = freezed,
+    Object? tileStyle = freezed,
   }) {
     return _then(_value.copyWith(
       theme: theme == freezed
@@ -66,6 +72,10 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
           ? _value.font
           : font // ignore: cast_nullable_to_non_nullable
               as AppFont,
+      tileStyle: tileStyle == freezed
+          ? _value.tileStyle
+          : tileStyle // ignore: cast_nullable_to_non_nullable
+              as NoteTileStyle,
     ));
   }
 }
@@ -75,7 +85,7 @@ abstract class _$SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
   factory _$SettingsCopyWith(_Settings value, $Res Function(_Settings) then) =
       __$SettingsCopyWithImpl<$Res>;
   @override
-  $Res call({AppTheme theme, AppFont font});
+  $Res call({AppTheme theme, AppFont font, NoteTileStyle tileStyle});
 }
 
 /// @nodoc
@@ -91,6 +101,7 @@ class __$SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
   $Res call({
     Object? theme = freezed,
     Object? font = freezed,
+    Object? tileStyle = freezed,
   }) {
     return _then(_Settings(
       theme: theme == freezed
@@ -101,6 +112,10 @@ class __$SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
           ? _value.font
           : font // ignore: cast_nullable_to_non_nullable
               as AppFont,
+      tileStyle: tileStyle == freezed
+          ? _value.tileStyle
+          : tileStyle // ignore: cast_nullable_to_non_nullable
+              as NoteTileStyle,
     ));
   }
 }
@@ -108,16 +123,19 @@ class __$SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Settings implements _Settings {
-  const _$_Settings({required this.theme, required this.font});
+  const _$_Settings(
+      {required this.theme, required this.font, required this.tileStyle});
 
   @override
   final AppTheme theme;
   @override
   final AppFont font;
+  @override
+  final NoteTileStyle tileStyle;
 
   @override
   String toString() {
-    return 'Settings(theme: $theme, font: $font)';
+    return 'Settings(theme: $theme, font: $font, tileStyle: $tileStyle)';
   }
 
   @override
@@ -127,14 +145,18 @@ class _$_Settings implements _Settings {
             (identical(other.theme, theme) ||
                 const DeepCollectionEquality().equals(other.theme, theme)) &&
             (identical(other.font, font) ||
-                const DeepCollectionEquality().equals(other.font, font)));
+                const DeepCollectionEquality().equals(other.font, font)) &&
+            (identical(other.tileStyle, tileStyle) ||
+                const DeepCollectionEquality()
+                    .equals(other.tileStyle, tileStyle)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(theme) ^
-      const DeepCollectionEquality().hash(font);
+      const DeepCollectionEquality().hash(font) ^
+      const DeepCollectionEquality().hash(tileStyle);
 
   @JsonKey(ignore: true)
   @override
@@ -143,13 +165,17 @@ class _$_Settings implements _Settings {
 }
 
 abstract class _Settings implements Settings {
-  const factory _Settings({required AppTheme theme, required AppFont font}) =
-      _$_Settings;
+  const factory _Settings(
+      {required AppTheme theme,
+      required AppFont font,
+      required NoteTileStyle tileStyle}) = _$_Settings;
 
   @override
   AppTheme get theme => throw _privateConstructorUsedError;
   @override
   AppFont get font => throw _privateConstructorUsedError;
+  @override
+  NoteTileStyle get tileStyle => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$SettingsCopyWith<_Settings> get copyWith =>

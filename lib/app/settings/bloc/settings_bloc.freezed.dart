@@ -31,6 +31,12 @@ class _$SettingsEventTearOff {
       appFont,
     );
   }
+
+  _TileStyleChanged tileStyleChanged(NoteTileStyle tileStyle) {
+    return _TileStyleChanged(
+      tileStyle,
+    );
+  }
 }
 
 /// @nodoc
@@ -43,6 +49,7 @@ mixin _$SettingsEvent {
     required TResult Function() initialized,
     required TResult Function(AppTheme appTheme) themeChanged,
     required TResult Function(AppFont appFont) fontChanged,
+    required TResult Function(NoteTileStyle tileStyle) tileStyleChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +57,7 @@ mixin _$SettingsEvent {
     TResult Function()? initialized,
     TResult Function(AppTheme appTheme)? themeChanged,
     TResult Function(AppFont appFont)? fontChanged,
+    TResult Function(NoteTileStyle tileStyle)? tileStyleChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -58,6 +66,7 @@ mixin _$SettingsEvent {
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_ThemeChanged value) themeChanged,
     required TResult Function(_FontChanged value) fontChanged,
+    required TResult Function(_TileStyleChanged value) tileStyleChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +74,7 @@ mixin _$SettingsEvent {
     TResult Function(_Initialized value)? initialized,
     TResult Function(_ThemeChanged value)? themeChanged,
     TResult Function(_FontChanged value)? fontChanged,
+    TResult Function(_TileStyleChanged value)? tileStyleChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -129,6 +139,7 @@ class _$_Initialized implements _Initialized {
     required TResult Function() initialized,
     required TResult Function(AppTheme appTheme) themeChanged,
     required TResult Function(AppFont appFont) fontChanged,
+    required TResult Function(NoteTileStyle tileStyle) tileStyleChanged,
   }) {
     return initialized();
   }
@@ -139,6 +150,7 @@ class _$_Initialized implements _Initialized {
     TResult Function()? initialized,
     TResult Function(AppTheme appTheme)? themeChanged,
     TResult Function(AppFont appFont)? fontChanged,
+    TResult Function(NoteTileStyle tileStyle)? tileStyleChanged,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -153,6 +165,7 @@ class _$_Initialized implements _Initialized {
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_ThemeChanged value) themeChanged,
     required TResult Function(_FontChanged value) fontChanged,
+    required TResult Function(_TileStyleChanged value) tileStyleChanged,
   }) {
     return initialized(this);
   }
@@ -163,6 +176,7 @@ class _$_Initialized implements _Initialized {
     TResult Function(_Initialized value)? initialized,
     TResult Function(_ThemeChanged value)? themeChanged,
     TResult Function(_FontChanged value)? fontChanged,
+    TResult Function(_TileStyleChanged value)? tileStyleChanged,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -245,6 +259,7 @@ class _$_ThemeChanged implements _ThemeChanged {
     required TResult Function() initialized,
     required TResult Function(AppTheme appTheme) themeChanged,
     required TResult Function(AppFont appFont) fontChanged,
+    required TResult Function(NoteTileStyle tileStyle) tileStyleChanged,
   }) {
     return themeChanged(appTheme);
   }
@@ -255,6 +270,7 @@ class _$_ThemeChanged implements _ThemeChanged {
     TResult Function()? initialized,
     TResult Function(AppTheme appTheme)? themeChanged,
     TResult Function(AppFont appFont)? fontChanged,
+    TResult Function(NoteTileStyle tileStyle)? tileStyleChanged,
     required TResult orElse(),
   }) {
     if (themeChanged != null) {
@@ -269,6 +285,7 @@ class _$_ThemeChanged implements _ThemeChanged {
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_ThemeChanged value) themeChanged,
     required TResult Function(_FontChanged value) fontChanged,
+    required TResult Function(_TileStyleChanged value) tileStyleChanged,
   }) {
     return themeChanged(this);
   }
@@ -279,6 +296,7 @@ class _$_ThemeChanged implements _ThemeChanged {
     TResult Function(_Initialized value)? initialized,
     TResult Function(_ThemeChanged value)? themeChanged,
     TResult Function(_FontChanged value)? fontChanged,
+    TResult Function(_TileStyleChanged value)? tileStyleChanged,
     required TResult orElse(),
   }) {
     if (themeChanged != null) {
@@ -364,6 +382,7 @@ class _$_FontChanged implements _FontChanged {
     required TResult Function() initialized,
     required TResult Function(AppTheme appTheme) themeChanged,
     required TResult Function(AppFont appFont) fontChanged,
+    required TResult Function(NoteTileStyle tileStyle) tileStyleChanged,
   }) {
     return fontChanged(appFont);
   }
@@ -374,6 +393,7 @@ class _$_FontChanged implements _FontChanged {
     TResult Function()? initialized,
     TResult Function(AppTheme appTheme)? themeChanged,
     TResult Function(AppFont appFont)? fontChanged,
+    TResult Function(NoteTileStyle tileStyle)? tileStyleChanged,
     required TResult orElse(),
   }) {
     if (fontChanged != null) {
@@ -388,6 +408,7 @@ class _$_FontChanged implements _FontChanged {
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_ThemeChanged value) themeChanged,
     required TResult Function(_FontChanged value) fontChanged,
+    required TResult Function(_TileStyleChanged value) tileStyleChanged,
   }) {
     return fontChanged(this);
   }
@@ -398,6 +419,7 @@ class _$_FontChanged implements _FontChanged {
     TResult Function(_Initialized value)? initialized,
     TResult Function(_ThemeChanged value)? themeChanged,
     TResult Function(_FontChanged value)? fontChanged,
+    TResult Function(_TileStyleChanged value)? tileStyleChanged,
     required TResult orElse(),
   }) {
     if (fontChanged != null) {
@@ -413,6 +435,132 @@ abstract class _FontChanged implements SettingsEvent {
   AppFont get appFont => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$FontChangedCopyWith<_FontChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$TileStyleChangedCopyWith<$Res> {
+  factory _$TileStyleChangedCopyWith(
+          _TileStyleChanged value, $Res Function(_TileStyleChanged) then) =
+      __$TileStyleChangedCopyWithImpl<$Res>;
+  $Res call({NoteTileStyle tileStyle});
+}
+
+/// @nodoc
+class __$TileStyleChangedCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res>
+    implements _$TileStyleChangedCopyWith<$Res> {
+  __$TileStyleChangedCopyWithImpl(
+      _TileStyleChanged _value, $Res Function(_TileStyleChanged) _then)
+      : super(_value, (v) => _then(v as _TileStyleChanged));
+
+  @override
+  _TileStyleChanged get _value => super._value as _TileStyleChanged;
+
+  @override
+  $Res call({
+    Object? tileStyle = freezed,
+  }) {
+    return _then(_TileStyleChanged(
+      tileStyle == freezed
+          ? _value.tileStyle
+          : tileStyle // ignore: cast_nullable_to_non_nullable
+              as NoteTileStyle,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TileStyleChanged implements _TileStyleChanged {
+  const _$_TileStyleChanged(this.tileStyle);
+
+  @override
+  final NoteTileStyle tileStyle;
+
+  @override
+  String toString() {
+    return 'SettingsEvent.tileStyleChanged(tileStyle: $tileStyle)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _TileStyleChanged &&
+            (identical(other.tileStyle, tileStyle) ||
+                const DeepCollectionEquality()
+                    .equals(other.tileStyle, tileStyle)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(tileStyle);
+
+  @JsonKey(ignore: true)
+  @override
+  _$TileStyleChangedCopyWith<_TileStyleChanged> get copyWith =>
+      __$TileStyleChangedCopyWithImpl<_TileStyleChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(AppTheme appTheme) themeChanged,
+    required TResult Function(AppFont appFont) fontChanged,
+    required TResult Function(NoteTileStyle tileStyle) tileStyleChanged,
+  }) {
+    return tileStyleChanged(tileStyle);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(AppTheme appTheme)? themeChanged,
+    TResult Function(AppFont appFont)? fontChanged,
+    TResult Function(NoteTileStyle tileStyle)? tileStyleChanged,
+    required TResult orElse(),
+  }) {
+    if (tileStyleChanged != null) {
+      return tileStyleChanged(tileStyle);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_ThemeChanged value) themeChanged,
+    required TResult Function(_FontChanged value) fontChanged,
+    required TResult Function(_TileStyleChanged value) tileStyleChanged,
+  }) {
+    return tileStyleChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_ThemeChanged value)? themeChanged,
+    TResult Function(_FontChanged value)? fontChanged,
+    TResult Function(_TileStyleChanged value)? tileStyleChanged,
+    required TResult orElse(),
+  }) {
+    if (tileStyleChanged != null) {
+      return tileStyleChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TileStyleChanged implements SettingsEvent {
+  const factory _TileStyleChanged(NoteTileStyle tileStyle) =
+      _$_TileStyleChanged;
+
+  NoteTileStyle get tileStyle => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$TileStyleChangedCopyWith<_TileStyleChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
