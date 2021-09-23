@@ -15,6 +15,7 @@ import 'widgets/add_todo.dart';
 import 'widgets/body_field.dart';
 import 'widgets/header_field.dart';
 import 'widgets/label_field.dart';
+import 'widgets/options_modal_sheet.dart';
 import 'widgets/todo_list.dart';
 
 class NoteFormScreen extends StatelessWidget {
@@ -67,22 +68,24 @@ class NoteFormScreenScaffold extends StatelessWidget {
         title: BlocBuilder<NoteFormBloc, NoteFormState>(
           buildWhen: (p, c) => p.isEditing != c.isEditing,
           builder: (context, state) {
-            return Text(state.isEditing ? "Edit the note" : "Create a note");
+            return Text(state.isEditing ? "Edit" : "Create");
           },
         ),
         actions: [
           IconButton(
             onPressed: () {
-              context.read<NoteFormBloc>().add(
-                  const NoteFormEvent.favoriteStatusChanged(isFavorite: false));
-            },
-            icon: const Icon(Icons.favorite_outline),
-          ),
-          IconButton(
-            onPressed: () {
               context.read<NoteFormBloc>().add(NoteFormEvent.saved(index));
             },
             icon: const Icon(Icons.done),
+          ),
+          BlocBuilder<NoteFormBloc, NoteFormState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () =>
+                    OptionsBottomSheet(note: state.note).show(context),
+                icon: const Icon(Icons.more_vert),
+              );
+            },
           ),
         ],
       ),

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
+import 'package:notesapp/app/settings/domain/note_tile_style.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+import 'app/note/bloc/note_actor/note_actor_bloc.dart';
 import 'app/note/infrastructure/note_dto.dart';
 import 'app/note/presentation/note_watcher_screen.dart';
 import 'app/settings/bloc/settings_bloc.dart';
@@ -29,9 +31,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          getIt<SettingsBloc>()..add(const SettingsEvent.initialized()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              getIt<SettingsBloc>()..add(const SettingsEvent.initialized()),
+        ),
+        BlocProvider<NoteActorBloc>(
+          create: (context) => getIt<NoteActorBloc>(),
+        ),
+      ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           return MaterialApp.router(
@@ -82,7 +91,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("NOTES APP"),
@@ -92,6 +100,21 @@ class MyHomePage extends StatelessWidget {
               AutoRouter.of(context).push(const SettingsScreenRoute());
             },
             icon: const Icon(Icons.settings),
+          ),
+          BlocBuilder<SettingsBloc, SettingsState>(
+            buildWhen: (p, c) => p.settings.tileStyle != c.settings.tileStyle,
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () => context.read<SettingsBloc>().add(
+                    SettingsEvent.tileStyleChanged(
+                        state.settings.tileStyle == NoteTileStyle.listview
+                            ? NoteTileStyle.gridview
+                            : NoteTileStyle.listview)),
+                icon: state.settings.tileStyle == NoteTileStyle.listview
+                    ? const Icon(Icons.grid_view)
+                    : const Icon(Icons.list_alt),
+              );
+            },
           ),
         ],
       ),
