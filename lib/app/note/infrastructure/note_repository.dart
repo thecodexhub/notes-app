@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:uuid/uuid.dart';
 
 import '../domain/i_note_repository.dart';
 import '../domain/note.dart';
@@ -98,6 +99,10 @@ class NoteRepository implements INoteRepository {
   @override
   Future<Either<NoteFailure, Unit>> deleteNote(List<int> indices) async {
     final notesBox = await Hive.openBox<NoteDto>("notes");
+    // Sort the indices in descending order
+    // If lower index gets deleted first, the index of other selected
+    // notes will get changed.
+    indices.sort((a, b) => b - a);
     try {
       for (final int index in indices) {
         final n = notesBox.getAt(index);
@@ -115,7 +120,7 @@ class NoteRepository implements INoteRepository {
   Future<Either<NoteFailure, Unit>> duplicateNote(Note note) async {
     final notesBox = await Hive.openBox<NoteDto>("notes");
     final newNote = note.copyWith(
-      id: "new_id",
+      id: const Uuid().v1(),
       lastEditedAt: DateTime.now(),
       isFavorite: false,
     );
