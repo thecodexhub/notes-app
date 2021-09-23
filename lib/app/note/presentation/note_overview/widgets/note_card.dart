@@ -46,6 +46,7 @@ class NoteCard extends StatelessWidget {
               )
             ],
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: note.todos.length,
               itemBuilder: (context, index) {

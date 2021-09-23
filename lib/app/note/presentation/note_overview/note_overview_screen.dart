@@ -6,6 +6,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../routes/app_router.gr.dart';
+import '../../../settings/bloc/settings_bloc.dart';
+import '../../../settings/domain/note_tile_style.dart';
 import '../../bloc/note_actor/note_actor_bloc.dart';
 import '../../domain/note.dart';
 import 'misc/selected_notes.dart';
@@ -66,35 +68,32 @@ class NoteOverviewScreen extends HookWidget {
                       ),
                     ),
                   Expanded(
-                    child: StaggeredGridView.countBuilder(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 4.0,
-                      shrinkWrap: true,
-                      itemCount: notes.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            consumer.select
-                                ? consumer.selectNotes(index)
-                                : AutoRouter.of(context).push(
-                                    NoteFormScreenRoute(
-                                        initialNote: notes[index],
-                                        indexForEditedNote: index));
+                    child: BlocBuilder<SettingsBloc, SettingsState>(
+                      buildWhen: (p, c) =>
+                          p.settings.tileStyle != c.settings.tileStyle,
+                      builder: (context, state) {
+                        if (state.settings.tileStyle ==
+                            NoteTileStyle.listview) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: notes.length,
+                            itemBuilder: (context, index) {
+                              return _buildNoteCard(consumer, index, context);
+                            },
+                          );
+                        }
+                        return StaggeredGridView.countBuilder(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 4.0,
+                          shrinkWrap: true,
+                          itemCount: notes.length,
+                          itemBuilder: (context, index) {
+                            return _buildNoteCard(consumer, index, context);
                           },
-                          onLongPress: () {
-                            consumer.toggleSelectOn();
-                            consumer.selectNotes(index);
-                          },
-                          child: NoteCard(
-                            key: Key(notes[index].id),
-                            note: notes[index],
-                            selectMode: consumer.select,
-                            isSelected: consumer.selectedNotes.contains(index),
-                          ),
+                          staggeredTileBuilder: (index) =>
+                              const StaggeredTile.fit(2),
                         );
                       },
-                      staggeredTileBuilder: (index) =>
-                          const StaggeredTile.fit(2),
                     ),
                   ),
                 ],
@@ -102,6 +101,28 @@ class NoteOverviewScreen extends HookWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildNoteCard(
+      SelectedNotes consumer, int index, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        consumer.select
+            ? consumer.selectNotes(index)
+            : AutoRouter.of(context).push(NoteFormScreenRoute(
+                initialNote: notes[index], indexForEditedNote: index));
+      },
+      onLongPress: () {
+        consumer.toggleSelectOn();
+        consumer.selectNotes(index);
+      },
+      child: NoteCard(
+        key: Key(notes[index].id),
+        note: notes[index],
+        selectMode: consumer.select,
+        isSelected: consumer.selectedNotes.contains(index),
       ),
     );
   }
