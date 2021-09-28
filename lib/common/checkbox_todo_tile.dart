@@ -62,7 +62,7 @@ class CheckBoxTodoTile extends HookWidget {
                 alignment: Alignment.center,
                 child: Icon(
                   Icons.done,
-                  color: !context.isDark ? Colors.grey[850] : Colors.grey[50],
+                  color: context.isDark ? Colors.grey[850] : Colors.grey[50],
                   size: 16.0,
                 ),
               ),
