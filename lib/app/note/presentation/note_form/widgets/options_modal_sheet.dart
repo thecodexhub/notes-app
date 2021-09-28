@@ -7,8 +7,13 @@ import '../../../bloc/note_actor/note_actor_bloc.dart';
 import '../../../domain/note.dart';
 
 class OptionsBottomSheet extends StatelessWidget {
-  const OptionsBottomSheet({Key? key, required this.note}) : super(key: key);
+  const OptionsBottomSheet({
+    Key? key,
+    required this.note,
+    this.onFavoriteTap,
+  }) : super(key: key);
   final Note note;
+  final VoidCallback? onFavoriteTap;
 
   void show(BuildContext context) {
     showModalBottomSheet<bool>(
@@ -44,6 +49,18 @@ class OptionsBottomSheet extends StatelessWidget {
             onTap: () => context
                 .read<NoteActorBloc>()
                 .add(NoteActorEvent.duplicated(note)),
+          ),
+          ListTile(
+            leading: Icon(
+              note.isFavorite ? Icons.favorite : Icons.favorite_border,
+            ),
+            title: Text(
+              note.isFavorite ? "Remove from favorite" : "Add to favorite",
+              style: TextStyle(
+                color: context.isDark ? Colors.white70 : Colors.black87,
+              ),
+            ),
+            onTap: onFavoriteTap,
           ),
           ListTile(
             leading: const Icon(Icons.share),

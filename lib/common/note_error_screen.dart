@@ -12,7 +12,7 @@ class ErrorCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
-        color: context.isDark ? Colors.grey[900] : Colors.white,
+        color: context.isDark ? Colors.grey[850] : Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

@@ -25,6 +25,25 @@ class NoteCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (note.isFavorite) ...[
+              Container(
+                padding: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: context.isDark ? Colors.grey[850] : Colors.grey[50],
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  "❤   Favorite",
+                  style: TextStyle(
+                    color: context.isDark ? Colors.white70 : Colors.black87,
+                    fontSize: 12.0,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8.0),
+            ],
             Text(
               note.title,
               style: TextStyle(

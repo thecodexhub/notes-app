@@ -79,10 +79,20 @@ class NoteFormScreenScaffold extends StatelessWidget {
             icon: const Icon(Icons.done),
           ),
           BlocBuilder<NoteFormBloc, NoteFormState>(
+            buildWhen: (p, c) => p.note.isFavorite != c.note.isFavorite,
             builder: (context, state) {
               return IconButton(
-                onPressed: () =>
-                    OptionsBottomSheet(note: state.note).show(context),
+                onPressed: () => OptionsBottomSheet(
+                  note: state.note,
+                  onFavoriteTap: () {
+                    context.read<NoteFormBloc>().add(
+                        NoteFormEvent.favoriteStatusChanged(
+                            isFavorite: !state.note.isFavorite));
+                    context
+                        .read<NoteFormBloc>()
+                        .add(NoteFormEvent.saved(index));
+                  },
+                ).show(context),
                 icon: const Icon(Icons.more_vert),
               );
             },
