@@ -11,9 +11,12 @@ import 'note_dto.dart';
 
 @LazySingleton(as: INoteRepository)
 class NoteRepository implements INoteRepository {
+  final HiveInterface _hive;
+  NoteRepository(this._hive);
+
   @override
   Stream<Either<NoteFailure, List<Note>>> watchNotes() async* {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     yield* notesBox
         .watch()
         .map((_) => right<NoteFailure, List<Note>>(
@@ -28,7 +31,7 @@ class NoteRepository implements INoteRepository {
 
   @override
   Stream<Either<NoteFailure, List<Note>>> watchFavoriteNotes() async* {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     yield* notesBox
         .watch()
         .map((_) => right<NoteFailure, List<Note>>(notesBox.values
@@ -55,7 +58,7 @@ class NoteRepository implements INoteRepository {
   @override
   Stream<Either<NoteFailure, List<Note>>> watchSearchedNotes(
       List<String>? args, List<String>? labels) async* {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     yield* notesBox
         .watch()
         .map((_) => right<NoteFailure, List<Note>>(notesBox.values
@@ -74,7 +77,7 @@ class NoteRepository implements INoteRepository {
 
   @override
   Future<Either<NoteFailure, Unit>> addNote(Note note) async {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     try {
       await notesBox.add(NoteDto.fromDomain(note));
       return right(unit);
@@ -86,7 +89,7 @@ class NoteRepository implements INoteRepository {
 
   @override
   Future<Either<NoteFailure, Unit>> updateNote(int index, Note note) async {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     try {
       await notesBox.putAt(index, NoteDto.fromDomain(note));
       return right(unit);
@@ -98,7 +101,7 @@ class NoteRepository implements INoteRepository {
 
   @override
   Future<Either<NoteFailure, Unit>> deleteNote(List<int> indices) async {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     // Sort the indices in descending order
     // If lower index gets deleted first, the index of other selected
     // notes will get changed.
@@ -118,7 +121,7 @@ class NoteRepository implements INoteRepository {
 
   @override
   Future<Either<NoteFailure, Unit>> duplicateNote(Note note) async {
-    final notesBox = await Hive.openBox<NoteDto>("notes");
+    final notesBox = await _hive.openBox<NoteDto>("notes");
     final newNote = note.copyWith(
       id: const Uuid().v1(),
       lastEditedAt: DateTime.now(),

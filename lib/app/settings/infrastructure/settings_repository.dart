@@ -17,42 +17,40 @@ class SettingsRepository implements ISettingsRepository {
   // ignore: constant_identifier_names
   static const String TILE_STYLE_KEY = 'note-tile-style';
 
+  final SharedPreferences _sharedPreferences;
+  SettingsRepository(this._sharedPreferences);
+
   @override
   Future<Option<AppFont>> getFontFromLocalCache() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final String? font = sharedPreferences.getString(FONT_KEY);
+    final String? font = _sharedPreferences.getString(FONT_KEY);
     final appFont = enumFromString(AppFont.values, font);
     return optionOf(appFont);
   }
 
   @override
   Future<Option<AppTheme>> getThemeFromLocalCache() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final String? theme = sharedPreferences.getString(THEME_KEY);
+    final String? theme = _sharedPreferences.getString(THEME_KEY);
     final appTheme = enumFromString(AppTheme.values, theme);
     return optionOf(appTheme);
   }
 
   @override
   Future<Option<NoteTileStyle>> getTileStyleFromLocalCache() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final String? tileStyle = sharedPreferences.getString(TILE_STYLE_KEY);
+    final String? tileStyle = _sharedPreferences.getString(TILE_STYLE_KEY);
     final noteTileStyle = enumFromString(NoteTileStyle.values, tileStyle);
     return optionOf(noteTileStyle);
   }
 
   @override
   Future<Option<AppFont>> updateFontInCache(AppFont font) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(FONT_KEY, font.fontToString());
+    await _sharedPreferences.setString(FONT_KEY, font.fontToString());
 
     return optionOf(font);
   }
 
   @override
   Future<Option<AppTheme>> updateThemeInCache(AppTheme theme) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(THEME_KEY, theme.themeToString());
+    await _sharedPreferences.setString(THEME_KEY, theme.themeToString());
 
     return optionOf(theme);
   }
@@ -60,8 +58,7 @@ class SettingsRepository implements ISettingsRepository {
   @override
   Future<Option<NoteTileStyle>> updateTileStyleInCache(
       NoteTileStyle tileStyle) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(
+    await _sharedPreferences.setString(
         TILE_STYLE_KEY, tileStyle.noteTileStyleToString());
 
     return optionOf(tileStyle);
